@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat
+  namespace: devenv
+spec:
+  replicas: 2 
+  selector: 
+   matchLabels: 
+     app: tomcat
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      name: tomcat-nginx
+      labels:
+        app: tomcat
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                - key: size
+                  operator: NotIn
+                  values:
+                    - large
+                    - small
+      containers:
+        - name: tomcat
+          image: krishna123456/tomcat:1.11.111

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tomcat-nginx
+  namespace: devenv
+  labels:
+    app: tomcat
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.14.2

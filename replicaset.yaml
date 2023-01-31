@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: tomcat
+spec:
+  replicas: 0 
+  selector: 
+   matchLabels: 
+     app: tomcat
+  template:
+    metadata:
+      name: tomcat-nginx
+      labels:
+        app: tomcat
+    spec:
+      containers:
+        - name: tomcat
+          image: madhusudhanpk/tomcat:1.1
